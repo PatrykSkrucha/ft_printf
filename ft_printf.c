@@ -58,6 +58,11 @@ static int	ft_putstr(char *s, int control)
 {
 	int len;
 
+	if (s == NULL)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	len = (int)ft_strlen(s);
 	if (s)
 		write(1, s, len);
