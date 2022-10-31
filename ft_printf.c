@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/10/31 16:03:06 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:56:31 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,24 @@ static int	ft_putchar(char c)
 	return (1);
 }
 
-static int	ft_putstr(char *s)
+static int	ft_putstr(char *s, int control)
 {
+	int len;
+
+	len = (int)ft_strlen(s);
 	if (s)
-		write(1, s, ft_strlen(s));
-	return ((int)ft_strlen(s));
+		write(1, s, len);
+	if(control)
+		free(s);
+	return (len);
 }
 
 
-static char *to_hex(long long int a, int control)
+static char *to_hex(long long int a, int control, int pointer)
 {
 	char *str;
 	int mem_size;
-	int temp;
+	long long int temp;
 
 	temp = a;
 	mem_size = 0;
@@ -75,6 +80,8 @@ static char *to_hex(long long int a, int control)
 		temp /= 16;
 		mem_size++;
 	}
+	if (pointer)
+		mem_size += 2;
 	str = (char*)malloc(sizeof(char) * (mem_size + 1));
 	if (!str)
 		return (NULL);
@@ -92,12 +99,20 @@ static char *to_hex(long long int a, int control)
 			else
 				str[mem_size] = temp + 'W';
 		}
-
 		a /= 16;
 	}
 	return (str);
 }
 
+static char	*create_pointer(long long number)
+{
+	char	*str;
+
+	str = to_hex(number, 0, 1);
+	str[1] = 'x';
+	str[0] = '0';
+	return (str);
+}
 
 static int	print_unsigned(unsigned int n)
 {
@@ -136,17 +151,17 @@ int ft_printf(const char *format, ...)
 			else if (format[a + 1] == 'c')
 				result += ft_putchar(va_arg(args, int));
 			else if (format[a + 1] == 's')
-				result += ft_putstr(va_arg(args, char *));
+				result += ft_putstr(va_arg(args, char *), 0);
 			else if (format[a + 1] == 'x')
-				result += ft_putstr(to_hex(va_arg(args, long long int), 0));	
+				result += ft_putstr(to_hex(va_arg(args, long long int), 0, 0), 1);	
 			else if (format[a + 1] == 'X')
-				result += ft_putstr(to_hex(va_arg(args, long long int), 1));
+				result += ft_putstr(to_hex(va_arg(args, long long int), 1, 0), 1);
 			else if (format[a + 1] == '%')
 				result += ft_putchar('%');
 			else if (format[a + 1] == 'u')
 				result += print_unsigned(va_arg(args, unsigned int));
-			// else if (format[a + 1] == 'p')
-			// 	result += 
+			else if (format[a + 1] == 'p')
+				result += ft_putstr(create_pointer(va_arg(args, long long int)), 1);
 			a += 2;
 		}
 		else
@@ -161,10 +176,11 @@ int ft_printf(const char *format, ...)
 
 int main()
 {
-	int b = 1000000;
-	int *c = &b;
+	int a = 12548;
 	
-	ft_printf("%p\n", &c);
+	ft_printf("%x\n", a);
+	// printf("%x\n", b);
+	// printf("%p\n", c);
 	// printf("%p", &c);
 	// printf("size: %i", a);
 	
