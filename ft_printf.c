@@ -144,6 +144,8 @@ int ft_printf(const char *format, ...)
 {
 	int a = 0;
 	int result = 0;
+	if (!format)
+		return (0);
 	int len = strlen(format); 
 	va_list args;
 	va_start(args, format);
