@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/10/31 14:15:59 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:46:38 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,51 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../libft/libft.h"
+
+static int	ft_putnbr(int n)
+{
+	char	a;
+	int counter;
+
+	counter = 0;
+	if (n == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		counter = 11;
+	}
+	else if (n < 0)
+	{
+		write(1, "-", 1);
+		counter += ft_putnbr(-n);
+		counter++;
+	}
+	else if (n > 9)
+	{
+		counter += ft_putnbr(n / 10);
+		counter += ft_putnbr(n % 10);
+	}
+	else
+	{
+		a = n + '0';
+		write(1, &a, 1);
+		counter++;
+	}
+	return (counter);
+}
+
+static int	ft_putchar(char c)
+{
+	write(1, &c, 1);
+	return (1);
+}
+
+static int	ft_putstr(char *s)
+{
+	if (s)
+		write(1, s, ft_strlen(s));
+	return ((int)ft_strlen(s));
+}
+
 
 static char *to_hex(int a, int control)
 {
@@ -54,21 +99,29 @@ static char *to_hex(int a, int control)
 }
 
 
-void	print_unsigned(unsigned int n)
+static int	print_unsigned(unsigned int n)
 {
 	char	a;
+	int counter;
 
+	counter = 0;
 	if (n > 9)
 	{
-		ft_putnbr_fd(n / 10, 1);
-		ft_putnbr_fd(n % 10, 1);
+		counter += ft_putnbr(n / 10);
+		counter += ft_putnbr(n % 10);
 	}
 	else
 	{
 		a = n + '0';
-		write(1, &a, 1);
+		counter += ft_putchar(a);
 	}
+	return (counter);
 }
+
+// static int	print_pointer(long long int)
+// {
+
+// }
 
 int ft_printf(const char *format, ...)
 {
@@ -82,45 +135,42 @@ int ft_printf(const char *format, ...)
 		if(format[a] == '%')
 		{
 			if (format[a + 1] == 'i' ||format[a + 1] == 'd')
-				ft_putnbr_fd(va_arg(args, int), 1);
+				result += ft_putnbr(va_arg(args, int));
 			else if (format[a + 1] == 'c')
-				ft_putchar_fd(va_arg(args, int), 1);
+				result += ft_putchar(va_arg(args, int));
 			else if (format[a + 1] == 's')
-				ft_putstr_fd(va_arg(args, char *), 1);
+				result += ft_putstr(va_arg(args, char *));
 			else if (format[a + 1] == 'x')
-				ft_putstr_fd(to_hex(va_arg(args, int), 0), 1);	
+				result += ft_putstr(to_hex(va_arg(args, int), 0));	
 			else if (format[a + 1] == 'X')
-				ft_putstr_fd(to_hex(va_arg(args, int), 1), 1);				
+				result += ft_putstr(to_hex(va_arg(args, int), 1));
 			else if (format[a + 1] == '%')
-				ft_putchar_fd('%', 1);
+				result += ft_putchar('%');
 			else if (format[a + 1] == 'u')
-				print_unsigned(va_arg(args, unsigned int));
-				
+				result += print_unsigned(va_arg(args, unsigned int));
+			else if (format[a + 1] == 'p')
+				result += 
 			a += 2;
 		}
 		else
 		{
-			ft_putchar_fd(format[a], 1);
+			result += ft_putchar(format[a]);
 			a++;
 		}
 	}
 	va_end(args);
-
-	return (a);
+	return (result);
 }
 
-// int main()
-// {
-// 	unsigned int a = 10;
-// 	// int *b = &a;
+int main()
+{
+	int b = 1000000;
+	char x = 'b';
+	char *str = "Hello";
 	
-// 	// printf("%p\n", &b);
+	int a = ft_printf("aaaaaaaaa%u", b);
+	printf("size: %i", a);
 	
-// 	printf("%u\n", a);
-// 	ft_printf("%u\n", a);
-// 	// to_hex(a);
-// 	// ft_printf("aaaa\n%i\n tu jest cos innego a tu jest oj string: %s\n\n", a, s);
-// 	// printf("aaaa\n%i\n tu jest cos innego a tu jest oj string: %s\n\n", a, s);
-// }
+}
 
 //gcc ft_printf.c ../libft/libft.a -o main && ./main
