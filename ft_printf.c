@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/10/31 14:14:04 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/10/31 14:15:59 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,18 @@ int ft_printf(const char *format, ...)
 	return (a);
 }
 
-int main()
-{
-	unsigned int a = 10;
-	// int *b = &a;
+// int main()
+// {
+// 	unsigned int a = 10;
+// 	// int *b = &a;
 	
-	// printf("%p\n", &b);
+// 	// printf("%p\n", &b);
 	
-	printf("%u\n", a);
-	ft_printf("%u\n", a);
-	// to_hex(a);
-	// ft_printf("aaaa\n%i\n tu jest cos innego a tu jest oj string: %s\n\n", a, s);
-	// printf("aaaa\n%i\n tu jest cos innego a tu jest oj string: %s\n\n", a, s);
-}
+// 	printf("%u\n", a);
+// 	ft_printf("%u\n", a);
+// 	// to_hex(a);
+// 	// ft_printf("aaaa\n%i\n tu jest cos innego a tu jest oj string: %s\n\n", a, s);
+// 	// printf("aaaa\n%i\n tu jest cos innego a tu jest oj string: %s\n\n", a, s);
+// }
 
 //gcc ft_printf.c ../libft/libft.a -o main && ./main
