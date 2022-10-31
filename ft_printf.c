@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/10/31 15:46:38 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:03:06 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	ft_putstr(char *s)
 }
 
 
-static char *to_hex(int a, int control)
+static char *to_hex(long long int a, int control)
 {
 	char *str;
 	int mem_size;
@@ -118,10 +118,7 @@ static int	print_unsigned(unsigned int n)
 	return (counter);
 }
 
-// static int	print_pointer(long long int)
-// {
 
-// }
 
 int ft_printf(const char *format, ...)
 {
@@ -141,15 +138,15 @@ int ft_printf(const char *format, ...)
 			else if (format[a + 1] == 's')
 				result += ft_putstr(va_arg(args, char *));
 			else if (format[a + 1] == 'x')
-				result += ft_putstr(to_hex(va_arg(args, int), 0));	
+				result += ft_putstr(to_hex(va_arg(args, long long int), 0));	
 			else if (format[a + 1] == 'X')
-				result += ft_putstr(to_hex(va_arg(args, int), 1));
+				result += ft_putstr(to_hex(va_arg(args, long long int), 1));
 			else if (format[a + 1] == '%')
 				result += ft_putchar('%');
 			else if (format[a + 1] == 'u')
 				result += print_unsigned(va_arg(args, unsigned int));
-			else if (format[a + 1] == 'p')
-				result += 
+			// else if (format[a + 1] == 'p')
+			// 	result += 
 			a += 2;
 		}
 		else
@@ -165,11 +162,11 @@ int ft_printf(const char *format, ...)
 int main()
 {
 	int b = 1000000;
-	char x = 'b';
-	char *str = "Hello";
+	int *c = &b;
 	
-	int a = ft_printf("aaaaaaaaa%u", b);
-	printf("size: %i", a);
+	ft_printf("%p\n", &c);
+	// printf("%p", &c);
+	// printf("size: %i", a);
 	
 }
 
