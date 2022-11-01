@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:34:53 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/01 16:37:35 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:58:11 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,23 @@ int	ft_putstr(char *s)
 	if (s)
 		write(1, s, len);
 	return (len);
+}
+
+int	print_unsigned(unsigned long int n)
+{
+	char	a;
+	int		counter;
+
+	counter = 0;
+	if (n > 9)
+	{
+		counter += ft_putnbr(n / 10);
+		counter += ft_putnbr(n % 10);
+	}
+	else
+	{
+		a = n + '0';
+		counter += ft_putchar(a);
+	}
+	return (counter);
 }
