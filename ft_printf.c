@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/10/31 17:56:31 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:42:02 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../libft/libft.h"
 
 static int	ft_putnbr(int n)
 {
@@ -58,7 +57,7 @@ static int	ft_putstr(char *s, int control)
 {
 	int len;
 
-	len = (int)ft_strlen(s);
+	len = (int)strlen(s);
 	if (s)
 		write(1, s, len);
 	if(control)
@@ -174,16 +173,18 @@ int ft_printf(const char *format, ...)
 	return (result);
 }
 
-int main()
-{
-	int a = 12548;
+// int main()
+// {
+// 	int b = 12548;
+// 	char *s = NULL;
+// 	// ft_printf("%s", (char *)NULL);
+// 	write(1, s[0], 1);
+
+// 	// printf("%x\n", b);
+// 	// printf("%p\n", c);
+// 	// printf("%p", &c);
+// 	// printf("size: %i", a);
 	
-	ft_printf("%x\n", a);
-	// printf("%x\n", b);
-	// printf("%p\n", c);
-	// printf("%p", &c);
-	// printf("size: %i", a);
-	
-}
+// }
 
 //gcc ft_printf.c ../libft/libft.a -o main && ./main
