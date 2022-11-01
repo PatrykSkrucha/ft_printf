@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/01 11:43:09 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/01 12:07:35 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,15 @@ static int	ft_putchar(char c)
 static int	ft_putstr(char *s, int control)
 {
 	int len;
+	if (s == NULL)
+	{
+		write(1, "(null)", 6);
+		if(control)
+			free(s);
+		return (6);
+	}
 
-	len = (int)ft_strlen(s);
+	len = (int)strlen(s); //zmienic to
 	if (s)
 		write(1, s, len);
 	if(control)
@@ -106,7 +113,15 @@ static char *to_hex(long long int a, int control, int pointer)
 static char	*create_pointer(long long number)
 {
 	char	*str;
+	void	*ptr;
 
+	ptr = (void*)number;
+	if (ptr == NULL)
+		{
+			str = malloc(3);
+			str = "0x0";
+			return (str);
+		}
 	str = to_hex(number, 0, 1);
 	str[1] = 'x';
 	str[0] = '0';
@@ -175,18 +190,19 @@ int ft_printf(const char *format, ...)
 	return (result);
 }
 
-// int main()
-// {
-// 	int b = 12548;
-// 	char *s = NULL;
-// 	// ft_printf("%s", (char *)NULL);
-// 	write(1, s[0], 1);
-
-// 	// printf("%x\n", b);
-// 	// printf("%p\n", c);
-// 	// printf("%p", &c);
-// 	// printf("size: %i", a);
+int main()
+{
+	int b = 12548;
+	int *c = &b;
+	char *s = NULL;
+	// ft_printf("%s", (char *)NULL);
 	
-// }
+
+	ft_printf("%x", 0);
+	// printf("%p\n", c);
+	// printf("%p", &c);
+	// printf("size: %i", a);
+	
+}
 
 //gcc ft_printf.c ../libft/libft.a -o main && ./main
