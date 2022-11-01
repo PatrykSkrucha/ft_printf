@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/01 15:31:50 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:49:06 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,19 @@ static int	to_hex(long long int a, int control)
 	{
 		counter += ft_putchar(a + '0');
 	}
-	else	
+	else
 	{
-			if (control)
-				counter += ft_putchar(a + '7');
-			else
-				counter += ft_putchar(a + 'W');
-		}
+		if (control)
+			counter += ft_putchar(a + '7');
+		else
+			counter += ft_putchar(a + 'W');
+	}
 	return (counter);
 }
 
-static int convert_pointer(unsigned long int number)
+static int	convert_pointer(unsigned long int number)
 {
-	int counter;
+	int	counter;
 
 	counter = 0;
 	if (number >= 16)
@@ -116,14 +116,13 @@ static int	create_pointer(unsigned long int number)
 	counter = 0;
 	counter += write(1, "0x", 2);
 	counter += convert_pointer(number);
-	
 	return (counter);
 }
 
 static int	print_unsigned(unsigned long int n)
 {
 	char	a;
-	int counter;
+	int		counter;
 
 	counter = 0;
 	if (n > 9)
@@ -139,64 +138,67 @@ static int	print_unsigned(unsigned long int n)
 	return (counter);
 }
 
-
-
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-	int a = 0;
-	int result = 0;
+	int		i;
+	int		result;
+	int		len;
+	va_list	args;
+
 	if (!format)
 		return (0);
-	int len = strlen(format); 
-	va_list args;
+	len = strlen(format);
+	i = 0;
+	result = 0;
 	va_start(args, format);
-	while(a < len)
+	while (i < len)
 	{
-		if(format[a] == '%')
+		if (format[i] == '%')
 		{
-			if (format[a + 1] == 'i' ||format[a + 1] == 'd')
+			if (format[i + 1] == 'i' || format[i + 1] == 'd')
 				result += ft_putnbr(va_arg(args, int));
-			else if (format[a + 1] == 'c')
+			else if (format[i + 1] == 'c')
 				result += ft_putchar(va_arg(args, int));
-			else if (format[a + 1] == 's')
+			else if (format[i + 1] == 's')
 				result += ft_putstr(va_arg(args, char *));
-			else if (format[a + 1] == 'x')
-				result += to_hex(va_arg(args, unsigned int), 0);	
-			else if (format[a + 1] == 'X')
+			else if (format[i + 1] == 'x')
+				result += to_hex(va_arg(args, unsigned int), 0);
+			else if (format[i + 1] == 'X')
 				result += to_hex(va_arg(args, unsigned int), 1);
-			else if (format[a + 1] == '%')
+			else if (format[i + 1] == '%')
 				result += ft_putchar('%');
-			else if (format[a + 1] == 'u')
+			else if (format[i + 1] == 'u')
 				result += print_unsigned(va_arg(args, unsigned int));
-			else if (format[a + 1] == 'p')
+			else if (format[i + 1] == 'p')
 				result += create_pointer(va_arg(args, unsigned long int));
-			a += 2;
+			i += 2;
 		}
 		else
 		{
-			result += ft_putchar(format[a]);
-			a++;
+			result += ft_putchar(format[i]);
+			i++;
 		}
 	}
 	va_end(args);
 	return (result);
 }
 
-// int main()
-// {
-// 	int b = 100;
-// 	int c;
-// 	char *s = NULL;
-// 	// printf("%p", (void*)NULL);
+int main()
+{
+	int b = 100;
+	int c;
+	char *s = NULL;
+	// printf("%p", (void*)NULL);
 	
-// //  0x10c597f7e 
-// 	// int a = ft_printf("hello%i", b);
-// 	// ft_printf("size: 8??? %i", a);
-// 	// printf("%llu\n", c);
-// 	ft_printf("%p", (void *)-14523);
-
-// 	// printf("size: %i", a);
+//  0x10c597f7e 
+	// int a = ft_printf("hello%i", b);
+	// ft_printf("size: 8??? %i", a);
+	// printf("%llu\n", c);
+	// ft_printf("%p", (void *)-14523);
+	ft_printf("\001\002\007\v\010\f\r\n");
+	printf("\001\002\007\v\010\f\r\n");
+	// printf("size: %i", a);
 	
-// }
+}
 
 //gcc ft_printf.c ../libft/libft.a -o main && ./main
