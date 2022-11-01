@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/01 14:11:32 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:31:50 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../libft/libft.h"
+#include <limits.h>
 
 static int	ft_putchar(char c)
 {
@@ -31,7 +31,7 @@ static int	ft_putnbr(int n)
 	if (n == -2147483648)
 	{
 		write(1, "-2147483648", 11);
-		counter = 11;
+		return (11);
 	}
 	else if (n < 0)
 	{
@@ -51,22 +51,18 @@ static int	ft_putnbr(int n)
 	return (counter);
 }
 
-static int	ft_putstr(char *s, int control)
+static int	ft_putstr(char *s)
 {
 	int	len;
 
 	if (s == NULL)
 	{
 		write(1, "(null)", 6);
-		if (control)
-			free(s);
 		return (6);
 	}
-	len = (int)ft_strlen(s); //zmienic to
+	len = (int)strlen(s); //zmienic to
 	if (s)
 		write(1, s, len);
-	if (control)
-		free(s);
 	return (len);
 }
 
@@ -75,7 +71,7 @@ static int	to_hex(long long int a, int control)
 	int	counter;
 
 	counter = 0;
-	if (a > 16)
+	if (a >= 16)
 	{
 		counter += to_hex(a / 16, control);
 		counter += to_hex(a % 16, control);
@@ -94,25 +90,37 @@ static int	to_hex(long long int a, int control)
 	return (counter);
 }
 
+static int convert_pointer(unsigned long int number)
+{
+	int counter;
 
-// static int	create_pointer(long long number)
-// {
-// 	int		counter;
-// 	void	*ptr;
+	counter = 0;
+	if (number >= 16)
+	{
+		counter += convert_pointer(number / 16);
+		counter += convert_pointer(number % 16);
+	}
+	else if (number < 10)
+	{
+		counter += ft_putchar(number + '0');
+	}
+	else
+		counter += ft_putchar(number + 'W');
+	return (counter);
+}
 
-// 	ptr = (void*)number;
-// 	if (ptr == NULL)
-// 		{
-// 			write(1, "0x0", 3);
-// 			return (3);
-// 		}
-// 	str = to_hex(number, 0, 1);
-// 	str[1] = 'x';
-// 	str[0] = '0';
-// 	return (str);
-// }
+static int	create_pointer(unsigned long int number)
+{
+	int		counter;
 
-static int	print_unsigned(unsigned int n)
+	counter = 0;
+	counter += write(1, "0x", 2);
+	counter += convert_pointer(number);
+	
+	return (counter);
+}
+
+static int	print_unsigned(unsigned long int n)
 {
 	char	a;
 	int counter;
@@ -151,17 +159,17 @@ int ft_printf(const char *format, ...)
 			else if (format[a + 1] == 'c')
 				result += ft_putchar(va_arg(args, int));
 			else if (format[a + 1] == 's')
-				result += ft_putstr(va_arg(args, char *), 0);
+				result += ft_putstr(va_arg(args, char *));
 			else if (format[a + 1] == 'x')
-				result += to_hex(va_arg(args, long long int), 0);	
+				result += to_hex(va_arg(args, unsigned int), 0);	
 			else if (format[a + 1] == 'X')
-				result += to_hex(va_arg(args, long long int), 1);
+				result += to_hex(va_arg(args, unsigned int), 1);
 			else if (format[a + 1] == '%')
 				result += ft_putchar('%');
 			else if (format[a + 1] == 'u')
 				result += print_unsigned(va_arg(args, unsigned int));
-			// else if (format[a + 1] == 'p')
-			// 	result += ft_putstr(create_pointer(va_arg(args, long long int)), 1);
+			else if (format[a + 1] == 'p')
+				result += create_pointer(va_arg(args, unsigned long int));
 			a += 2;
 		}
 		else
@@ -174,20 +182,21 @@ int ft_printf(const char *format, ...)
 	return (result);
 }
 
-int main()
-{
-	int b = 100;
-	int *c = &b;
-	char *s = NULL;
-	// printf("%i",printf("%p", (void*)NULL));
+// int main()
+// {
+// 	int b = 100;
+// 	int c;
+// 	char *s = NULL;
+// 	// printf("%p", (void*)NULL);
 	
-// 
-	int a = ft_printf("hello%i", b);
-	ft_printf("size: 8??? %i", a);
-	// printf("%p\n", c);
-	// printf("%p", &c);
-	// printf("size: %i", a);
+// //  0x10c597f7e 
+// 	// int a = ft_printf("hello%i", b);
+// 	// ft_printf("size: 8??? %i", a);
+// 	// printf("%llu\n", c);
+// 	ft_printf("%p", (void *)-14523);
+
+// 	// printf("size: %i", a);
 	
-}
+// }
 
 //gcc ft_printf.c ../libft/libft.a -o main && ./main
