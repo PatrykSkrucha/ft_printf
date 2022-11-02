@@ -1,5 +1,6 @@
 SRCS			=	ft_printf.c format_handler.c \
 					printers.c pointer_handler.c \
+					hex_handler.c \
 
 OBJS			= $(SRCS:.c=.o)
 
