@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:27:07 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/02 13:07:40 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:08:48 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ int	create_pointer(unsigned long int number)
 
 	counter = 0;
 	counter += write(1, "0x", 2);
-	counter += to_hex(number, 0);
+	counter += hex_handler(number, 0);
 	return (counter);
 }
