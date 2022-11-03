@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:33:06 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/02 13:29:30 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:08:37 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	format_handler(va_list args, int *result, const char *format, int *i)
 		else if (format[*i + 1] == 's')
 			*result += ft_putstr(va_arg(args, char *));
 		else if (format[*i + 1] == 'x')
-			*result += to_hex(va_arg(args, unsigned int), 0);
+			*result += hex_handler(va_arg(args, unsigned int), 0);
 		else if (format[*i + 1] == 'X')
-			*result += to_hex(va_arg(args, unsigned int), 1);
+			*result += hex_handler(va_arg(args, unsigned int), 1);
 		else if (format[*i + 1] == '%')
 			*result += ft_putchar('%');
 		else if (format[*i + 1] == 'u')

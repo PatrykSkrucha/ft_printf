@@ -6,21 +6,21 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:10:05 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/02 13:30:49 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:08:26 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	to_hex(unsigned long int a, int control)
+int	hex_handler(unsigned long int a, int control)
 {
 	int	counter;
 
 	counter = 0;
 	if (a >= 16)
 	{
-		counter += to_hex(a / 16, control);
-		counter += to_hex(a % 16, control);
+		counter += hex_handler(a / 16, control);
+		counter += hex_handler(a % 16, control);
 	}
 	else if (a < 10)
 		counter += ft_putchar(a + '0');
