@@ -6,12 +6,11 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:41:01 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/03 15:47:16 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:04:09 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 int	ft_printf(const char *format, ...)
 {

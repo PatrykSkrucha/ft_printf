@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:34:53 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/07 13:00:02 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:04:13 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	ft_putstr(char *s)
 		write(1, s, counter);
 	return (counter);
 }
-
-
 
 int	print_pointer(unsigned long int number)
 {
