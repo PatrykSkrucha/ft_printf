@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:34:53 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/03 16:15:43 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:00:02 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,6 @@ int	ft_putchar(char c)
 
 	counter = 0;
 	counter += write(1, &c, 1);
-	return (counter);
-}
-
-int	ft_putnbr(int n)
-{
-	int	counter;
-
-	counter = 0;
-	if (n == -2147483648)
-	{
-		counter += write(1, "-2147483648", 11);
-		return (counter);
-	}
-	else if (n < 0)
-	{
-		counter += ft_putchar('-');
-		counter += ft_putnbr(-n);
-	}
-	else if (n > 9)
-	{
-		counter += ft_putnbr(n / 10);
-		counter += ft_putnbr(n % 10);
-	}
-	else
-		counter += ft_putchar(n + '0');
 	return (counter);
 }
 
@@ -63,17 +38,14 @@ int	ft_putstr(char *s)
 	return (counter);
 }
 
-int	print_unsigned(unsigned long int n)
+
+
+int	print_pointer(unsigned long int number)
 {
 	int		counter;
 
 	counter = 0;
-	if (n > 9)
-	{
-		counter += ft_putnbr(n / 10);
-		counter += ft_putnbr(n % 10);
-	}
-	else
-		counter += ft_putchar(n + '0');
+	counter += write(1, "0x", 2);
+	counter += hex_handler(number, 0);
 	return (counter);
 }

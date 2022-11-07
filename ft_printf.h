@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 18:02:04 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/03 16:08:11 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:59:12 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 int		ft_printf(const char *format, ...);
-int		create_pointer(unsigned long int number);
+int		print_pointer(unsigned long int number);
 void	format_handler(va_list args, int *result, const char *format, int *i);
 int		ft_putchar(char c);
 int		ft_putnbr(int n);

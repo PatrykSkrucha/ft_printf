@@ -6,7 +6,7 @@
 /*   By: pskrucha <pskrucha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:33:06 by pskrucha          #+#    #+#             */
-/*   Updated: 2022/11/03 16:08:37 by pskrucha         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:00:10 by pskrucha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	format_handler(va_list args, int *result, const char *format, int *i)
 		else if (format[*i + 1] == 'u')
 			*result += print_unsigned(va_arg(args, unsigned int));
 		else if (format[*i + 1] == 'p')
-			*result += create_pointer(va_arg(args, unsigned long int));
+			*result += print_pointer(va_arg(args, unsigned long int));
 		*i += 2;
 	}
 	else
